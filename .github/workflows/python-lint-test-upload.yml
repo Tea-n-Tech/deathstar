@@ -73,7 +73,7 @@ jobs:
       # Install dependencies through task
       - name: Install Dependencies
         run: |
-          ./bin/task setup
+          ./bin/task install
 
       # Run our linting
       - name: Lint code
