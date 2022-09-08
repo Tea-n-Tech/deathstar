@@ -223,6 +223,7 @@ jobs:
       - name: Install Task
         run: |
           sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d
+
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v2
