@@ -11,7 +11,7 @@ rich = "^12.5.1"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.5"
-flake8 = "^5.0.3"
+flake9 = "^3.8.3"
 black = "^22.6.0"
 mypy = "^0.971"
 cyclonedx-bom = "^3.5.0"
@@ -30,6 +30,10 @@ disable = [
     # detail by the functions themselves
     "missing-module-docstring"
 ]
+
+[tool.pylint.basic]
+# Test files and classes don't need linting
+ignore-pattern="^(_|test_|Test)"
 
 [tool.flake8]
 # I have no clue why this is 10, maybe I ought to look it up
