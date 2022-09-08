@@ -143,8 +143,8 @@ jobs:
       # Install dependencies ... again
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
-          ./bin/task setup
+          python -m pip install --upgrade pip poetry
+          ./bin/task install
 
       # What the description says
       - name: Build packages for release
@@ -232,8 +232,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
-          ./bin/task setup
+          python -m pip install --upgrade poetry pip
+          ./bin/task install
 
       - name: Build packages for release
         run: |
