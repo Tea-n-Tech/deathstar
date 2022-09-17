@@ -4,7 +4,10 @@ name: Python Linting, Test and Upload
 # generally trigger on any push or pull request as shown
 # here but also other triggers based on time or specific
 # files or other events is possible.
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   # This job is called 'tests' as it runs the tests,
