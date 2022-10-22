@@ -142,3 +142,7 @@ cython_debug
 
 # hide generated coverage report
 cov_html
+
+# no dynamically generated changelog
+# it will be part of the docs on the gh-pages branch
+CHANGELOG.md
