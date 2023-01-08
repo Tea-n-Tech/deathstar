@@ -1,22 +1,29 @@
 version: "3"
 
+env:
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_OWNER: tea-n-tech
+  DOCKER_IMAGE_NAME: deathstar
+  DOCKER_IMAGE_VERSION: latest
+
 tasks:
   install:
     desc: Installs the dependencies.
     cmds:
       - poetry install
-      - poetry run pre-commit install
+      # Optional topic this disabled
+      # - poetry run pre-commit install
 
   lint:
     desc: Lints the code and reports on issues.
     cmds:
-      - python3 -m poetry run black --check deathstar
+      - poetry run black --check deathstar
       - |
-        python3 -m poetry run flake8 deathstar \
+        poetry run flake8 deathstar \
           --show-source \
           --statistics \
           --count
-      - python3 -m poetry run pylint deathstar
+      - poetry run pylint --ignore-patterns=test_.*?py deathstar
 
   sbom:
     desc: Generate the Software Bill of Materials
@@ -50,6 +57,11 @@ tasks:
         --cov=deathstar
         --cov-report=html
 
+  api:
+    desc: Run the API server
+    cmds:
+      - poetry run deathstar api
+
   docs-serve:
     desc: Serve the documentation locally
     deps:
@@ -71,3 +83,27 @@ tasks:
     desc: Generates the changelog
     cmds:
       - poetry run git-changelog --output CHANGELOG.md .
+
+  docker:build:
+    desc: Build the docker image
+    cmds:
+      - >
+        docker build
+        -f Dockerfile
+        -t "${DOCKER_REGISTRY}/${DOCKER_OWNER}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}"
+        .
+
+  docker:run:
+    desc: Run the docker image api
+    cmds:
+      - >
+        docker run
+        -p 8080:8080
+        "${DOCKER_REGISTRY}/${DOCKER_OWNER}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}"
+
+  docker:upload:
+    desc: Upload the docker image to GitHub
+    cmds:
+      - >
+        docker push
+        "${DOCKER_REGISTRY}/${DOCKER_OWNER}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}"
